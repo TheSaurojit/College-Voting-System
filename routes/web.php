@@ -21,7 +21,9 @@ use App\Http\Controllers\Student\ResultController as StudentResultController;
 | via OTP, voting, and results viewing.
 |
 */
-
+Route::get('/alp', function () {
+    return view('alp');
+});
 // Root redirect to student login
 Route::get('/', fn () => redirect('/login'));
 
@@ -40,6 +42,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::post('/students/bulk-import/preview', [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'preview'])  ->name('students.bulk-import.preview');
     Route::post('/students/bulk-import/store',   [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'store'])    ->name('students.bulk-import.store');
     Route::get('/students/bulk-import/template', [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'template']) ->name('students.bulk-import.template');
+    Route::delete('/students/bulk-delete', [StudentController::class, 'bulkDestroy'])->name('students.bulk-destroy');
 
     Route::resource('students', StudentController::class);
     Route::resource('posts', PostController::class);

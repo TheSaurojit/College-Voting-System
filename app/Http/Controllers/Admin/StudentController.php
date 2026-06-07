@@ -137,4 +137,26 @@ class StudentController extends Controller
         return redirect()->route('admin.students.index')
             ->with('success', 'Student and their votes deleted successfully.');
     }
+
+    /**
+     * Remove the specified students and their votes in bulk.
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids'   => ['required', 'array'],
+            'ids.*' => ['required', 'integer', 'exists:students,id'],
+        ]);
+
+        $ids = $request->input('ids');
+
+        // Delete votes of these students first
+        \App\Models\Vote::whereIn('student_id', $ids)->delete();
+
+        // Delete the students
+        Student::whereIn('id', $ids)->delete();
+
+        return redirect()->route('admin.students.index')
+            ->with('success', count($ids) . ' students and their votes deleted successfully.');
+    }
 }

@@ -114,3 +114,66 @@ test('admin can update a student from Degree to +2 program type and the semester
         'semester' => null,
     ]);
 });
+
+test('admin can bulk delete multiple students and their votes', function () {
+    $student1 = Student::create([
+        'name' => 'Student One',
+        'phone' => '1111111111',
+        'class' => '11',
+        'roll_no' => 'S001',
+    ]);
+    
+    $student2 = Student::create([
+        'name' => 'Student Two',
+        'phone' => '2222222222',
+        'class' => '12',
+        'roll_no' => 'S002',
+    ]);
+
+    $student3 = Student::create([
+        'name' => 'Student Three',
+        'phone' => '3333333333',
+        'class' => '12',
+        'roll_no' => 'S003',
+    ]);
+
+    // Create a vote for student1 and student2
+    $post = \App\Models\Post::create([
+        'name' => 'President',
+    ]);
+    $candidate = \App\Models\Candidate::create([
+        'name' => 'Candidate Alpha',
+        'post_id' => $post->id,
+        'semester' => '1st Sem',
+    ]);
+
+    $vote1 = \App\Models\Vote::create([
+        'student_id' => $student1->id,
+        'post_id' => $post->id,
+        'candidate_id' => $candidate->id,
+    ]);
+
+    $vote2 = \App\Models\Vote::create([
+        'student_id' => $student2->id,
+        'post_id' => $post->id,
+        'candidate_id' => $candidate->id,
+    ]);
+
+    // Admin acts as authenticated and calls bulk-destroy route
+    $response = $this->actingAs($this->admin)->delete(route('admin.students.bulk-destroy'), [
+        'ids' => [$student1->id, $student2->id],
+    ]);
+
+    $response->assertRedirect(route('admin.students.index'));
+    $response->assertSessionHas('success', '2 students and their votes deleted successfully.');
+
+    // Assert student1 and student2 are deleted, but student3 is not
+    $this->assertDatabaseMissing('students', ['id' => $student1->id]);
+    $this->assertDatabaseMissing('students', ['id' => $student2->id]);
+    $this->assertDatabaseHas('students', ['id' => $student3->id]);
+
+    // Assert votes are deleted
+    $this->assertDatabaseMissing('votes', ['id' => $vote1->id]);
+    $this->assertDatabaseMissing('votes', ['id' => $vote2->id]);
+});
+

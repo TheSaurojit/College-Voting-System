@@ -68,12 +68,30 @@
     </div>
 
     {{-- Table --}}
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+         x-data="{
+             selectedIds: [],
+             selectAll: false,
+             allIds: {{ json_encode($students->pluck('id')->toArray()) }},
+             toggleAll() {
+                 if (this.selectAll) {
+                     this.selectedIds = [...this.allIds];
+                 } else {
+                     this.selectedIds = [];
+                 }
+             },
+             updateSelectAll() {
+                 this.selectAll = this.selectedIds.length === this.allIds.length;
+             }
+         }">
         @if($students->count() > 0)
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
+                            <th class="w-12 px-6 py-4 text-left">
+                                <input type="checkbox" x-model="selectAll" @change="toggleAll()" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
+                            </th>
                             <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-4">#</th>
                             <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-4">Name</th>
                             <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-4">Phone</th>
@@ -85,7 +103,10 @@
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @foreach($students as $index => $student)
-                            <tr class="hover:bg-gray-50/50 transition-colors duration-150">
+                            <tr class="hover:bg-gray-50/50 transition-colors duration-150" :class="selectedIds.includes({{ $student->id }}) ? 'bg-indigo-50/30' : ''">
+                                <td class="px-6 py-4 w-12">
+                                    <input type="checkbox" value="{{ $student->id }}" x-model.number="selectedIds" @change="updateSelectAll()" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer">
+                                </td>
                                 <td class="px-6 py-4 text-sm text-gray-400 font-medium">{{ $students->firstItem() + $index }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
@@ -143,7 +164,44 @@
                         Add First Student
                     </a>
                 @endunless
-            </div>
         @endif
+
+        {{-- Bulk Actions Bar --}}
+        <div x-show="selectedIds.length > 0" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-10 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-10 scale-95"
+             class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border border-slate-800 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-6"
+             x-cloak>
+            <div class="flex items-center gap-2">
+                <span class="flex h-2.5 w-2.5 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
+                </span>
+                <span class="text-sm font-semibold tracking-wide">
+                    <span class="text-indigo-400 font-bold" x-text="selectedIds.length"></span> students selected
+                </span>
+            </div>
+            <div class="h-5 w-px bg-slate-800"></div>
+            <form id="bulk-delete-form" method="POST" action="{{ route('admin.students.bulk-destroy') }}">
+                @csrf
+                @method('DELETE')
+                <template x-for="id in selectedIds" :key="id">
+                    <input type="hidden" name="ids[]" :value="id">
+                </template>
+                <button type="button"
+                    data-confirm="This will permanently delete all selected students and all their votes. This action cannot be undone."
+                    data-confirm-title="Delete Selected Students?"
+                    data-confirm-label="Yes, Delete All"
+                    data-confirm-form="#bulk-delete-form"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white text-sm font-semibold rounded-xl transition-all duration-150 shadow-lg shadow-red-500/20 transform hover:-translate-y-0.5 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Delete Selected
+                </button>
+            </form>
+        </div>
     </div>
 @endsection
