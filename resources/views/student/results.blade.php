@@ -10,7 +10,22 @@
             <p class="text-gray-500">View the current standings for all election positions</p>
         </div>
 
-        @if(!($published ?? false))
+        @if($ongoing ?? false)
+            {{-- Elections are Ongoing --}}
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
+                <div class="flex flex-col items-center justify-center py-20 px-6 text-center">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center mb-6">
+                        <svg class="w-10 h-10 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Elections are Ongoing</h2>
+                    <p class="text-gray-500 max-w-md mb-6">Results will be published after the election end time.</p>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 text-sm font-medium border border-indigo-100">
+                        <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Voting is active
+                    </div>
+                </div>
+            </div>
+        @elseif(!($published ?? false))
             {{-- Results Not Published --}}
             <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
                 <div class="flex flex-col items-center justify-center py-20 px-6 text-center">

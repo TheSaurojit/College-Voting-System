@@ -16,18 +16,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Twilio Configuration
+    | Fast2SMS Configuration
     |--------------------------------------------------------------------------
     |
-    | Configuration for the Twilio SMS service. You can obtain these
-    | credentials from your Twilio dashboard at https://www.twilio.com/console
+    | Configuration for the Fast2SMS SMS service bulkV2 endpoint.
     |
     */
 
-    'twilio' => [
-        'sid' => env('TWILIO_SID'),
-        'token' => env('TWILIO_AUTH_TOKEN'),
-        'from' => env('TWILIO_PHONE_NUMBER'),
+    'fast2sms' => [
+        'authorization' => env('FAST2SMS_AUTHORIZATION'),
     ],
 
 ];

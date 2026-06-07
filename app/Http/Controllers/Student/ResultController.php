@@ -15,10 +15,24 @@ class ResultController extends Controller
     {
         $settings = ElectionSetting::current();
 
+        $now = now();
+        $isOngoing = $settings->voting_open && 
+                     (!$settings->voting_start || $now->gte($settings->voting_start)) && 
+                     (!$settings->voting_end || $now->lte($settings->voting_end));
+
+        if ($isOngoing) {
+            return view('student.results', [
+                'posts'     => collect(),
+                'published' => false,
+                'ongoing'   => true,
+            ]);
+        }
+
         if (! $settings->results_published) {
             return view('student.results', [
                 'posts'     => collect(),
                 'published' => false,
+                'ongoing'   => false,
             ]);
         }
 
@@ -33,6 +47,7 @@ class ResultController extends Controller
         return view('student.results', [
             'posts'     => $posts,
             'published' => true,
+            'ongoing'   => false,
         ]);
     }
 }

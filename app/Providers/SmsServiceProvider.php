@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\SmsServiceInterface;
 use App\Services\LogSmsService;
-use App\Services\TwilioSmsService;
+use App\Services\Fast2SmsService;
 use Illuminate\Support\ServiceProvider;
 
 class SmsServiceProvider extends ServiceProvider
@@ -16,7 +16,7 @@ class SmsServiceProvider extends ServiceProvider
     {
         $this->app->singleton(SmsServiceInterface::class, function ($app) {
             return match (config('sms.driver')) {
-                'twilio' => new TwilioSmsService(),
+                'fast2sms' => new Fast2SmsService(),
                 default => new LogSmsService(),
             };
         });

@@ -50,31 +50,31 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('student.verify-otp') }}" @submit="handleSubmit">
+                <form method="POST" action="{{ route('student.verify-otp') }}">
                     @csrf
 
-                    {{-- OTP Digit Boxes --}}
-                    <div class="flex justify-center gap-3 mb-8">
-                        <template x-for="(digit, index) in digits" :key="index">
+                    {{-- Single OTP Input --}}
+                    <div class="mb-8">
+                        <label for="otp" class="block text-sm font-semibold text-white/90 mb-3 text-center">Enter 6-Digit OTP</label>
+                        <div class="relative max-w-[240px] mx-auto">
                             <input
                                 type="text"
-                                maxlength="1"
-                                x-model="digits[index]"
-                                @input="handleInput(index, $event)"
-                                @keydown.backspace="handleBackspace(index, $event)"
-                                @paste="handlePaste($event)"
-                                @focus="$event.target.select()"
-                                :x-ref="'otp' + index"
-                                class="w-12 h-14 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white/50 transition-all duration-200"
-                                :class="digit ? 'border-white/50 bg-white/20' : ''"
-                                placeholder="·"
+                                id="otp"
+                                name="otp"
+                                x-model="otpValue"
+                                @input="otpValue = $event.target.value.replace(/[^0-9]/g, '').slice(0, 6)"
+                                required
+                                pattern="[0-9]{6}"
+                                maxlength="6"
                                 inputmode="numeric"
+                                class="w-full py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-center text-3xl font-bold tracking-[0.25em] text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white/50 transition-all duration-200"
+                                placeholder="••••••"
                             >
-                        </template>
+                        </div>
+                        @error('otp')
+                            <p class="mt-1.5 text-sm text-red-300 text-center">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    {{-- Hidden combined OTP input --}}
-                    <input type="hidden" name="otp" :value="otpValue">
 
                     {{-- Timer --}}
                     <div class="text-center mb-6">
@@ -117,20 +117,16 @@
     <script>
         function otpForm() {
             return {
-                digits: ['', '', '', '', '', ''],
-                timeLeft: 300,
+                otpValue: '',
+                timeLeft: 120,
                 timer: null,
 
                 init() {
                     this.startTimer();
                     this.$nextTick(() => {
-                        const firstInput = this.$el.querySelector('input[type="text"]');
-                        if (firstInput) firstInput.focus();
+                        const otpInput = document.getElementById('otp');
+                        if (otpInput) otpInput.focus();
                     });
-                },
-
-                get otpValue() {
-                    return this.digits.join('');
                 },
 
                 get formattedTime() {
@@ -147,41 +143,6 @@
                             clearInterval(this.timer);
                         }
                     }, 1000);
-                },
-
-                handleInput(index, event) {
-                    const value = event.target.value.replace(/[^0-9]/g, '');
-                    this.digits[index] = value;
-
-                    if (value && index < 5) {
-                        const allInputs = this.$el.querySelectorAll('input[type="text"]');
-                        if (allInputs[index + 1]) allInputs[index + 1].focus();
-                    }
-                },
-
-                handleBackspace(index, event) {
-                    if (!this.digits[index] && index > 0) {
-                        const allInputs = this.$el.querySelectorAll('input[type="text"]');
-                        if (allInputs[index - 1]) {
-                            allInputs[index - 1].focus();
-                            this.digits[index - 1] = '';
-                        }
-                    }
-                },
-
-                handlePaste(event) {
-                    event.preventDefault();
-                    const text = (event.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
-                    for (let i = 0; i < Math.min(text.length, 6); i++) {
-                        this.digits[i] = text[i];
-                    }
-                    const allInputs = this.$el.querySelectorAll('input[type="text"]');
-                    const focusIndex = Math.min(text.length, 5);
-                    if (allInputs[focusIndex]) allInputs[focusIndex].focus();
-                },
-
-                handleSubmit() {
-                    // OTP value is already set via x-model
                 }
             };
         }

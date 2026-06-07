@@ -109,7 +109,7 @@ class StudentAuthController extends Controller
         Otp::create([
             'phone'      => $request->phone,
             'otp_code'   => $otpCode,
-            'expires_at' => now()->addMinutes(5),
+            'expires_at' => now()->addMinutes(2),
             'verified'   => false,
         ]);
 
