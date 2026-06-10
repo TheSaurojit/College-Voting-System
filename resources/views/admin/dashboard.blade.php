@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Dashboard')
-@section('subtitle', 'Overview of your election system')
+@section('subtitle', 'Overview of college election system')
 
 @section('content')
     {{-- Stats Grid --}}
