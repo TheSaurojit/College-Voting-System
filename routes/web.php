@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CandidateController;
 use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ElectionSettingController;
 use App\Http\Controllers\Admin\StudentBulkImportController;
+use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Student\VotingController;
 use App\Http\Controllers\Student\ResultController as StudentResultController;
 
@@ -55,6 +56,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::get('/settings', [ElectionSettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [ElectionSettingController::class, 'update'])->name('settings.update');
     Route::post('/settings/toggle-voting', [ElectionSettingController::class, 'toggleVoting'])->name('settings.toggle-voting');
+    Route::get('/password', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
 });
 
 // ─── Student Authentication (OTP-based) ──────────────────────────────
