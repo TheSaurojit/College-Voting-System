@@ -45,9 +45,12 @@
             @foreach($posts as $post)
                 @php
                     $postCandidates = $post->candidates->sortByDesc('votes_count');
-                    $maxVotes = $postCandidates->max('votes_count') ?: 1;
+                    $maxVotes = $postCandidates->max('votes_count') ?: 0;
                     $totalPostVotes = $postCandidates->sum('votes_count');
-                    $winner = $postCandidates->first();
+                    $winners = $postCandidates->filter(function($c) use ($maxVotes) {
+                        return $c->votes_count === $maxVotes && $maxVotes > 0;
+                    });
+                    $isTie = $winners->count() > 1;
                 @endphp
 
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -66,12 +69,12 @@
                         @forelse($postCandidates as $index => $candidate)
                             @php
                                 $percentage = $totalPostVotes > 0 ? round(($candidate->votes_count / $totalPostVotes) * 100, 1) : 0;
-                                $isWinner = $index === 0 && $candidate->votes_count > 0;
+                                $isWinner = $winners->contains($candidate->id);
                             @endphp
 
-                            <div class="flex items-center gap-4 {{ $isWinner ? 'bg-amber-50 -mx-2 px-2 py-3 rounded-xl border border-amber-100' : '' }}">
+                            <div class="flex items-center gap-4 {{ $isWinner ? ($isTie ? 'bg-slate-50 -mx-2 px-2 py-3 rounded-xl border border-slate-200' : 'bg-amber-50 -mx-2 px-2 py-3 rounded-xl border border-amber-100') : '' }}">
                                 {{-- Photo/Avatar --}}
-                                <div class="w-10 h-10 rounded-full overflow-hidden shrink-0 {{ $isWinner ? 'ring-2 ring-amber-400 ring-offset-2' : '' }}">
+                                <div class="w-10 h-10 rounded-full overflow-hidden shrink-0 {{ $isWinner ? ($isTie ? 'ring-2 ring-slate-400 ring-offset-2' : 'ring-2 ring-amber-400 ring-offset-2') : '' }}">
                                     @if($candidate->photo)
                                         <img src="{{ asset('storage/' . $candidate->photo) }}" class="w-full h-full object-cover" alt="{{ $candidate->name }}">
                                     @else
@@ -87,10 +90,16 @@
                                         <div class="flex items-center gap-2">
                                             <span class="text-sm font-semibold text-gray-900">{{ $candidate->name }}</span>
                                             @if($isWinner)
-                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold">
-                                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                                    Winner
-                                                </span>
+                                                @if($isTie)
+                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
+                                                        Tied (1st)
+                                                    </span>
+                                                @else
+                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold">
+                                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                                        Winner
+                                                    </span>
+                                                @endif
                                             @endif
                                         </div>
                                         <div class="text-right">
@@ -99,7 +108,7 @@
                                         </div>
                                     </div>
                                     <div class="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
-                                        <div class="h-full rounded-full transition-all duration-1000 ease-out {{ $isWinner ? 'bg-gradient-to-r from-amber-400 to-amber-500' : 'bg-gradient-to-r from-indigo-400 to-violet-500' }}" style="width: {{ $percentage }}%"></div>
+                                        <div class="h-full rounded-full transition-all duration-1000 ease-out {{ $isWinner ? ($isTie ? 'bg-gradient-to-r from-slate-400 to-slate-500' : 'bg-gradient-to-r from-amber-400 to-amber-500') : 'bg-gradient-to-r from-indigo-400 to-violet-500' }}" style="width: {{ $percentage }}%"></div>
                                     </div>
                                 </div>
                             </div>
