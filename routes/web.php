@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CandidateController;
 use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ElectionSettingController;
+use App\Http\Controllers\Admin\StudentBulkImportController;
 use App\Http\Controllers\Student\VotingController;
 use App\Http\Controllers\Student\ResultController as StudentResultController;
 
@@ -21,9 +22,7 @@ use App\Http\Controllers\Student\ResultController as StudentResultController;
 | via OTP, voting, and results viewing.
 |
 */
-Route::get('/alp', function () {
-    return view('alp');
-});
+
 // Root redirect to student login
 Route::get('/', fn () => redirect('/login'));
 
@@ -38,10 +37,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
     // Student bulk import — must be declared BEFORE the resource route
     // so Laravel doesn't treat 'bulk-import' as a {student} parameter.
-    Route::get('/students/bulk-import',          [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'index'])    ->name('students.bulk-import');
-    Route::post('/students/bulk-import/preview', [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'preview'])  ->name('students.bulk-import.preview');
-    Route::post('/students/bulk-import/store',   [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'store'])    ->name('students.bulk-import.store');
-    Route::get('/students/bulk-import/template', [\App\Http\Controllers\Admin\StudentBulkImportController::class, 'template']) ->name('students.bulk-import.template');
+    Route::get('/students/bulk-import',          [StudentBulkImportController::class, 'index'])    ->name('students.bulk-import');
+    Route::post('/students/bulk-import/preview', [StudentBulkImportController::class, 'preview'])  ->name('students.bulk-import.preview');
+    Route::post('/students/bulk-import/store',   [StudentBulkImportController::class, 'store'])    ->name('students.bulk-import.store');
+    Route::get('/students/bulk-import/template', [StudentBulkImportController::class, 'template']) ->name('students.bulk-import.template');
     Route::delete('/students/bulk-delete', [StudentController::class, 'bulkDestroy'])->name('students.bulk-destroy');
 
     Route::resource('students', StudentController::class);

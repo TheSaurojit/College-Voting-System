@@ -26,8 +26,8 @@ class ElectionSettingController extends Controller
         $request->validate([
             'title'        => ['required', 'string', 'max:255'],
             'voting_open'  => ['nullable', 'boolean'],
-            'voting_start' => ['nullable', 'date'],
-            'voting_end'   => ['nullable', 'date', 'after_or_equal:voting_start'],
+            'voting_start' => ['required', 'date'],
+            'voting_end'   => ['required', 'date', 'after:voting_start'],
         ]);
 
         $settings = ElectionSetting::current();

@@ -125,10 +125,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label for="voting_start" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Voting Start
+                            Voting Start <span class="text-red-500">*</span>
                         </label>
                         <input type="datetime-local" id="voting_start" name="voting_start"
                             value="{{ old('voting_start', $settings->voting_start?->format('Y-m-d\TH:i')) }}"
+                            required
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200">
                         @error('voting_start')
@@ -138,10 +139,11 @@
 
                     <div>
                         <label for="voting_end" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Voting End
+                            Voting End <span class="text-red-500">*</span>
                         </label>
                         <input type="datetime-local" id="voting_end" name="voting_end"
                             value="{{ old('voting_end', $settings->voting_end?->format('Y-m-d\TH:i')) }}"
+                            required
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900
                                    focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-200">
                         @error('voting_end')
