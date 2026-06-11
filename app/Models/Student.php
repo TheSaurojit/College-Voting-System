@@ -22,6 +22,7 @@ class Student extends Model
         'semester',
         'class',
         'roll_no',
+        'voted',
     ];
 
     /**

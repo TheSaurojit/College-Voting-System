@@ -47,16 +47,17 @@ beforeEach(function () {
     session(['student_id' => $this->student->id]);
 });
 
-test('a student can cast a vote when voting is open and within time window', function () {
+test('a student can cast a ballot with votes when voting is open', function () {
     $response = $this->postJson(route('student.cast-vote'), [
-        'post_id' => $this->post->id,
-        'candidate_id' => $this->candidate->id,
+        'votes' => [
+            $this->post->id => $this->candidate->id,
+        ],
     ]);
 
     $response->assertOk();
     $response->assertJson([
         'success' => true,
-        'message' => 'Your vote has been cast successfully!',
+        'message' => 'Your ballot has been cast successfully!',
     ]);
 
     $this->assertDatabaseHas('votes', [
@@ -64,14 +65,34 @@ test('a student can cast a vote when voting is open and within time window', fun
         'post_id' => $this->post->id,
         'candidate_id' => $this->candidate->id,
     ]);
+
+    $this->student->refresh();
+    $this->assertTrue((bool)$this->student->voted);
+});
+
+test('a student can cast a ballot and skip positions', function () {
+    $response = $this->postJson(route('student.cast-vote'), [
+        'votes' => [
+            $this->post->id => 'skip',
+        ],
+    ]);
+
+    $response->assertOk();
+    
+    // No vote should be saved since it was skipped
+    $this->assertDatabaseEmpty('votes');
+
+    $this->student->refresh();
+    $this->assertTrue((bool)$this->student->voted);
 });
 
 test('a student cannot cast a vote when voting is disabled', function () {
     $this->settings->update(['voting_open' => false]);
 
     $response = $this->postJson(route('student.cast-vote'), [
-        'post_id' => $this->post->id,
-        'candidate_id' => $this->candidate->id,
+        'votes' => [
+            $this->post->id => $this->candidate->id,
+        ],
     ]);
 
     $response->assertStatus(403);
@@ -90,8 +111,9 @@ test('a student cannot cast a vote when voting has not started yet', function ()
     ]);
 
     $response = $this->postJson(route('student.cast-vote'), [
-        'post_id' => $this->post->id,
-        'candidate_id' => $this->candidate->id,
+        'votes' => [
+            $this->post->id => $this->candidate->id,
+        ],
     ]);
 
     $response->assertStatus(403);
@@ -110,8 +132,9 @@ test('a student cannot cast a vote when voting has already ended', function () {
     ]);
 
     $response = $this->postJson(route('student.cast-vote'), [
-        'post_id' => $this->post->id,
-        'candidate_id' => $this->candidate->id,
+        'votes' => [
+            $this->post->id => $this->candidate->id,
+        ],
     ]);
 
     $response->assertStatus(403);
@@ -121,6 +144,30 @@ test('a student cannot cast a vote when voting has already ended', function () {
     ]);
 
     $this->assertDatabaseEmpty('votes');
+});
+
+test('a student who has voted is redirected from vote page', function () {
+    $this->student->update(['voted' => true]);
+
+    $response = $this->get(route('student.vote'));
+
+    $response->assertRedirect(route('student.thank-you'));
+});
+
+test('a student who has voted cannot vote again', function () {
+    $this->student->update(['voted' => true]);
+
+    $response = $this->postJson(route('student.cast-vote'), [
+        'votes' => [
+            $this->post->id => $this->candidate->id,
+        ],
+    ]);
+
+    $response->assertStatus(403);
+    $response->assertJson([
+        'success' => false,
+        'message' => 'You have already casted your vote.',
+    ]);
 });
 
 test('voting page redirects to results if voting is closed', function () {

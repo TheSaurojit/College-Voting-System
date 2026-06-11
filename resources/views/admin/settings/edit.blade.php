@@ -206,11 +206,7 @@
 
         {{-- ── Danger Zone ──────────────────────────────────────────────────── --}}
         <div class="bg-white rounded-2xl shadow-sm border border-red-100 overflow-hidden">
-            <div class="px-6 py-5 border-b border-red-100">
-                <h3 class="text-lg font-bold text-red-600">Danger Zone</h3>
-                <p class="text-sm text-gray-500 mt-0.5">Irreversible actions — please be careful.</p>
-            </div>
-
+            
             <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <p class="text-sm font-semibold text-gray-800">Publish Results</p>
