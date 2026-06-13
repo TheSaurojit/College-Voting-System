@@ -47,7 +47,7 @@ class Candidate extends Model
     {
         return Attribute::make(
             get: fn () => $this->photo
-                ? asset('storage/' . $this->photo)
+                ? asset($this->photo)
                 : asset('images/default-avatar.png'),
         );
     }

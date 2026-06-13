@@ -32,7 +32,7 @@
                                 </template>
                                 <template x-if="!photoPreview">
                                     @if($candidate->photo)
-                                        <img src="{{ asset('storage/' . $candidate->photo) }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($candidate->photo) }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-400 to-violet-500 text-white text-2xl font-bold">
                                             {{ strtoupper(substr($candidate->name, 0, 1)) }}

@@ -53,14 +53,12 @@ The **College Voting System** is a web-based application that enables colleges t
 | **Authentication** | Laravel session auth (admin) + custom OTP-based session auth (students) |
 | **SMS Service** | Fast2SMS (production) |
 | **Excel Import** | maatwebsite/excel v3.1 |
-| **Testing** | Pest PHP 3.x |
 | **Queue / Cache / Session** | Database-driven |
 
 ### Key Composer Dependencies
 
 - `laravel/framework` ^12.0
 - `maatwebsite/excel` ^3.1
-- `pestphp/pest` ^3.8 (dev)
 
 ### Key npm Dependencies
 

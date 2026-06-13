@@ -74,7 +74,7 @@
                                             {{-- Photo --}}
                                             <div class="w-16 h-16 rounded-xl overflow-hidden shrink-0">
                                                 @if($candidate->photo)
-                                                    <img src="{{ asset('storage/' . $candidate->photo) }}" alt="{{ $candidate->name }}" class="w-full h-full object-cover">
+                                                    <img src="{{ asset($candidate->photo) }}" alt="{{ $candidate->name }}" class="w-full h-full object-cover">
                                                 @else
                                                     <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white text-xl font-bold">
                                                         {{ strtoupper(substr($candidate->name, 0, 1)) }}

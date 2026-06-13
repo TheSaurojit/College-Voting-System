@@ -71,7 +71,7 @@
                         {{-- Photo --}}
                         <div class="w-14 h-14 rounded-xl overflow-hidden shrink-0 {{ $isWinner ? ($isTie ? 'ring-2 ring-slate-400 ring-offset-2' : 'ring-2 ring-amber-400 ring-offset-2') : '' }}">
                             @if($candidate->photo)
-                                <img src="{{ asset('storage/' . $candidate->photo) }}" class="w-full h-full object-cover" alt="{{ $candidate->name }}">
+                                <img src="{{ asset($candidate->photo) }}" class="w-full h-full object-cover" alt="{{ $candidate->name }}">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-white text-lg font-bold">
                                     {{ strtoupper(substr($candidate->name, 0, 1)) }}
