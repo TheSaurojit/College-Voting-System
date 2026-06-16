@@ -24,3 +24,6 @@ Homestead.yaml
 Thumbs.db
 public/iclock/**
 *.docx
+
+/public/candidates
+*.png

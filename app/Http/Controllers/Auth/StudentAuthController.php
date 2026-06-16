@@ -109,7 +109,7 @@ class StudentAuthController extends Controller
         Otp::create([
             'phone'      => $request->phone,
             'otp_code'   => $otpCode,
-            'expires_at' => now()->addMinutes(2),
+            'expires_at' => now()->addMinutes(5),
             'verified'   => false,
         ]);
 
@@ -161,7 +161,7 @@ class StudentAuthController extends Controller
             ->where('verified', false)
             ->first();
 
-        if (! $otp) {
+        if (!$otp) {
             return back()->withErrors(['otp' => 'Invalid OTP. Please try again.']);
         }
 

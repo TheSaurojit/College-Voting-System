@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2026 at 04:17 PM
+-- Generation Time: Jun 14, 2026 at 06:18 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,14 +66,12 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`id`, `name`, `post_id`, `semester`, `photo`, `created_at`, `updated_at`) VALUES
-(2, 'Priya Patel', 1, '5th Sem', 'candidates/BHhWcIh3tu6AHUqH095I2NmzfGpeUZjtFfxgG0L5.jpg', '2026-06-05 22:47:43', '2026-06-10 14:10:01'),
-(4, 'Ananya Iyer', 2, '3rd Sem', 'candidates/w5xuQtezH1lZYv86uYqkEKKCyjg8ouzCFw3chxlT.jpg', '2026-06-05 22:47:43', '2026-06-10 14:12:54'),
-(6, 'Sneha Reddy', 2, '1st Sem', 'candidates/ExHedUrnRJjFg7ePgEOk0WNfsqkde3MOsvECMatL.jpg', '2026-06-05 22:47:43', '2026-06-10 14:11:31'),
-(7, 'Kabir Malhotra', 3, '12', 'candidates/334teQ14d0QlIYSWndzEjgBTzOc3lrbVrxl2VhpO.jpg', '2026-06-05 22:47:43', '2026-06-10 14:09:26'),
-(8, 'Meera Nair', 3, '12', 'candidates/1Q0tEcSY4Q6TC4lqgq4rlD7Ii1AE4StD2u0a92UA.jpg', '2026-06-05 22:47:43', '2026-06-10 14:10:39'),
-(9, 'Rohan Das', 1, '5th Sem', 'candidates/gUeHSHUDw6KreVVoja76funqJzQCzI0vTulILPdp.jpg', '2026-06-05 22:47:43', '2026-06-06 11:00:07'),
-(10, 'Ishaan Gupta', 4, '11', 'candidates/UqKmztwAzupF5QhgDzNze6rfPz9z9KYxHl5X8NG7.jpg', '2026-06-05 22:47:43', '2026-06-10 14:08:48'),
-(13, 'Benjamin Conrads', 4, '1st Sem', 'candidates/loJilHmik3SS5H5bNIw3a7YMQinKuncXbspzHf0s.jpg', '2026-06-07 15:49:50', '2026-06-07 15:50:17');
+(4, 'Ananya Iyer', 2, '3rd Sem', 'candidates/Zwdi5PyhCbXIyWKy8sQHUg4yK8ZD5SsWiHdGjNEn.jpg', '2026-06-05 22:47:43', '2026-06-13 05:12:42'),
+(7, 'Kabir Malhotra', 3, '12', 'candidates/wYTTlKdKTY2FADqZtQPuu8Ql8UHeAi7SAUl314cS.jpg', '2026-06-05 22:47:43', '2026-06-13 05:13:07'),
+(10, 'Ishaan Gupta', 4, '11', 'candidates/viXN4zZXKuKgEqdVWqog2oUeVv7YKRtfgtZaBOKE.jpg', '2026-06-05 22:47:43', '2026-06-13 05:12:58'),
+(13, 'Benjamin Conrads', 4, '1st Sem', 'candidates/IZ1PThqOGqBqh2XCcJSo0g1AJz64CPhdrMRbT1zL.jpg', '2026-06-07 15:49:50', '2026-06-13 05:12:50'),
+(14, 'Jane Barron', 3, 'Quam at do eum enim', 'candidates/LFOhmi5DrTwjz0pRMavOQZ8Vc4a8xwKymN45FwMG.jpg', '2026-06-13 05:13:35', '2026-06-13 05:13:35'),
+(15, 'Dalton Head', 2, 'Voluptas a blanditii', 'candidates/Dj1eRbILdro0GUQ9nsehtx7VMefBcduPQqiPNRhS.jpg', '2026-06-13 05:14:12', '2026-06-13 05:14:12');
 
 -- --------------------------------------------------------
 
@@ -97,7 +95,7 @@ CREATE TABLE `election_settings` (
 --
 
 INSERT INTO `election_settings` (`id`, `title`, `voting_open`, `results_published`, `voting_start`, `voting_end`, `created_at`, `updated_at`) VALUES
-(1, 'Students Union Election 2026', 0, 0, '2026-06-06 04:41:00', '2026-06-07 04:41:00', '2026-06-05 20:53:42', '2026-06-07 16:42:58');
+(1, 'Students Union Election 2026', 0, 1, '2026-06-06 04:41:00', '2026-06-11 04:41:00', '2026-06-05 20:53:42', '2026-06-11 11:49:30');
 
 -- --------------------------------------------------------
 
@@ -176,7 +174,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2026_06_06_000005_create_candidates_table', 1),
 (8, '2026_06_06_000006_create_votes_table', 1),
 (9, '2026_06_06_000007_create_otps_table', 1),
-(10, '2026_06_06_000008_create_election_settings_table', 1);
+(10, '2026_06_06_000008_create_election_settings_table', 1),
+(11, '2026_06_11_000001_add_voted_to_students_table', 2);
 
 -- --------------------------------------------------------
 
@@ -202,9 +201,9 @@ INSERT INTO `otps` (`id`, `phone`, `otp_code`, `expires_at`, `verified`, `create
 (1, '9110000001', '826843', '2026-06-06 04:40:04', 1, '2026-06-05 23:09:27', '2026-06-05 23:10:04'),
 (2, '9876543211', '239326', '2026-06-06 11:12:51', 0, '2026-06-06 11:07:51', '2026-06-06 11:07:51'),
 (13, '8720932392', '728933', '2026-06-07 11:08:06', 1, '2026-06-07 11:07:44', '2026-06-07 11:08:06'),
-(14, '9394825442', '219845', '2026-06-07 15:55:27', 1, '2026-06-07 15:53:52', '2026-06-07 15:55:27'),
 (15, '9678278682', '413363', '2026-06-07 16:01:43', 1, '2026-06-07 16:01:10', '2026-06-07 16:01:43'),
-(16, '9395340221', '661567', '2026-06-07 16:42:04', 1, '2026-06-07 16:41:28', '2026-06-07 16:42:04');
+(18, '9395340221', '946002', '2026-06-11 11:24:41', 1, '2026-06-11 11:24:33', '2026-06-11 11:24:41'),
+(19, '9394825442', '615358', '2026-06-11 11:29:49', 1, '2026-06-11 11:29:35', '2026-06-11 11:29:49');
 
 -- --------------------------------------------------------
 
@@ -263,8 +262,14 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nufeSne69UPjFI8KPU2wiv9Wy1dPZ2tQQdx172Jz', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaWU5MEdOV3pHWFYzVnZjVjRvbWxBQ2Y3OFVPeHBJbFo0YUlxRWJtYyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9jYW5kaWRhdGVzIjtzOjU6InJvdXRlIjtzOjIyOiJhZG1pbi5jYW5kaWRhdGVzLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1781100859),
-('T1RyYPtspau3ES1VQPNySVfdw84QSwPmBUSlC4wl', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.122.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibHJJSVAzZDhwS0x5YUllUnhmc1hNUzZPc2lTV2piVFhqdGN4Q1FPOSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1781100148);
+('0bBeaKmCk4OGaj0rJhUClmFdlEp9LRfq5SzQmEpp', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.122.1 Chrome/142.0.7444.265 Electron/39.8.8 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVXFmYXhONVRmc0RVV24xYVV5VlN6dHVKaTJMUmFmS0NiZDlFQkdZcCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1781175102),
+('3EwojvTz9e3DM0Uu7YeGz1gf3rOlsPYgF46VRp0b', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidmRxcTFrVlNPS0dLcHRrYTQySktMRHF5QjJHZHJFN0NwVzRtYUU0byI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZXN1bHRzIjtzOjU6InJvdXRlIjtzOjE1OiJzdHVkZW50LnJlc3VsdHMiO31zOjEwOiJzdHVkZW50X2lkIjtpOjYzO3M6MTI6InN0dWRlbnRfbmFtZSI7czo1OiJTaGlidSI7fQ==', 1781178579),
+('BKDkbiCgRxnDwTQtm8jkmy2GLlz78j0LwMNsurE1', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMmFBMkgxdnd5VHBwYTQyNlRua29hV3hrOHVjaDB4cWlwOGlyRDBqVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbi9vdHAiO3M6NToicm91dGUiO3M6MTE6InN0dWRlbnQub3RwIjt9czoxMDoiX290cF9waG9uZSI7czoxMDoiOTM5NDgyNTQ0MiI7czoxNToiX290cF9zdHVkZW50X2lkIjtpOjYzO30=', 1781177376),
+('FpiwAnhjBeViN85O8FJFlXZAkSl7XhTGNx4nIy0t', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoia2Q5bkg1MFlNTGl3b2JMdEp1SXFabWxsSmVVQklERnphZ3J5YXhDaiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbi9vdHAiO3M6NToicm91dGUiO3M6MTE6InN0dWRlbnQub3RwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxMDoiX290cF9waG9uZSI7czoxMDoiOTM5NTM0MDIyMSI7czoxNToiX290cF9zdHVkZW50X2lkIjtpOjU5O30=', 1781176174),
+('hTzyUTRn2fJvZpahbwU34JV3JXAJtpbCRITvyFyf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiTzB0dlFBT0VVMUYzcURSaFpYbkJ6OHkzeDBpbGp4b3pvR3JtdVJzRCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbi9vdHAiO3M6NToicm91dGUiO3M6MTE6InN0dWRlbnQub3RwIjt9czoxMDoiX290cF9waG9uZSI7czoxMDoiOTM5NTM0MDIyMSI7czoxNToiX290cF9zdHVkZW50X2lkIjtpOjU5O30=', 1781177074),
+('LnXgJWcLh6pAyk94wf9WUrAxIaPfaDueUA5kCcoj', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiV254bkRUQjVqQkpUekswR3ptUXprelNmMmlSQTg5cGFFc1BDYXRPYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zZXR0aW5ncyI7czo1OiJyb3V0ZSI7czoxOToiYWRtaW4uc2V0dGluZ3MuZWRpdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1781181727),
+('RLMBLAZWZuSqTO8LowfHJdLgvxAmMgLYh84DMHK3', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiU1hKazF4eFo2Wk5YcHhiRUEzVXZsa21KUThvNXdyTGJXaDJFOGV5ZSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7czo1OiJyb3V0ZSI7czoxMzoic3R1ZGVudC5sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1781327857),
+('U5bcxNCLOqhXjBYQYNkDmOG9WOVqKWfn5Z14ssq1', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoib2dOaFl6ZzA1eDBzSklZanZOaFZobERYWGo1dXpZSUdkUHk4WHc1UCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9jYW5kaWRhdGVzIjtzOjU6InJvdXRlIjtzOjIyOiJhZG1pbi5jYW5kaWRhdGVzLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1781327652);
 
 -- --------------------------------------------------------
 
@@ -280,35 +285,20 @@ CREATE TABLE `students` (
   `class` varchar(255) DEFAULT NULL,
   `roll_no` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `voted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `name`, `phone`, `semester`, `class`, `roll_no`, `created_at`, `updated_at`) VALUES
-(17, 'Student Twelve 1', '9120000001', NULL, '12', 'R1201', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(18, 'Student Twelve 2', '9120000002', NULL, '12', 'R1202', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(19, 'Student Twelve 3', '9120000003', NULL, '12', 'R1203', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(20, 'Student Twelve 4', '9120000004', NULL, '12', 'R1204', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(21, 'Student Twelve 5', '9120000005', NULL, '12', 'R1205', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(22, 'Student Twelve 6', '9120000006', NULL, '12', 'R1206', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(23, 'Student Twelve 7', '9120000007', NULL, '12', 'R1207', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(24, 'Student Twelve 8', '9120000008', NULL, '12', 'R1208', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(25, 'Student Twelve 9', '9120000009', NULL, '12', 'R1209', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(26, 'Student Twelve 10', '9120000010', NULL, '12', 'R1210', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(43, 'Student ThirdSem 7', '9030000007', '3rd Sem', NULL, 'R0307', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(44, 'Student ThirdSem 8', '9030000008', '3rd Sem', NULL, 'R0308', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(45, 'Student ThirdSem 9', '9030000009', '3rd Sem', NULL, 'R0309', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(50, 'Student FifthSem 4', '9050000004', '5th Sem', NULL, 'R0504', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(51, 'Student FifthSem 5', '9050000005', '5th Sem', NULL, 'R0505', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(52, 'Student FifthSem 6', '9050000006', '5th Sem', NULL, 'R0506', '2026-06-05 22:47:43', '2026-06-05 22:47:43'),
-(57, 'Vivian Hess', '+1 (773) 643-4947', NULL, '11', '919', '2026-06-06 10:38:02', '2026-06-06 10:38:02'),
-(59, 'Saurojit Karmakar', '9395340221', '5th Sem', NULL, '1110', '2026-06-06 10:57:51', '2026-06-06 11:13:53'),
-(60, 'Gita Kr', '8720932392', NULL, '11', '1110', '2026-06-07 11:06:28', '2026-06-07 11:07:37'),
-(61, 'Rohit Borah', '9678278682', '5th Sem', NULL, '1', '2026-06-07 15:42:00', '2026-06-07 15:52:13'),
-(63, 'Shibu', '9394825442', '5th Sem', NULL, '1', '2026-06-07 15:46:07', '2026-06-07 15:52:24');
+INSERT INTO `students` (`id`, `name`, `phone`, `semester`, `class`, `roll_no`, `created_at`, `updated_at`, `voted`) VALUES
+(57, 'Vivian Hess', '+1 (773) 643-4947', NULL, '11', '919', '2026-06-06 10:38:02', '2026-06-06 10:38:02', 0),
+(59, 'Saurojit Karmakar', '9395340221', '5th Sem', NULL, '1110', '2026-06-06 10:57:51', '2026-06-11 11:22:00', 1),
+(60, 'Gita Kr', '8720932392', NULL, '11', '1110', '2026-06-07 11:06:28', '2026-06-07 11:07:37', 0),
+(61, 'Rohit Borah', '9678278682', '5th Sem', NULL, '1', '2026-06-07 15:42:00', '2026-06-07 15:52:13', 0),
+(63, 'Shibu', '9394825442', '5th Sem', NULL, '1', '2026-06-07 15:46:07', '2026-06-11 11:49:00', 1);
 
 -- --------------------------------------------------------
 
@@ -334,7 +324,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@college.com', '9999999999', 'admin', NULL, '$2y$12$f03sL8F1jH5XM44wz7cIMeHSbziUl/7Zxguvh61Qsf/iQp.20cHp6', NULL, '2026-06-05 20:53:42', '2026-06-05 22:47:43');
+(1, 'Admin', 'admin@college.com', '9999999999', 'admin', NULL, '$2y$12$OvhRIwEDcEew0YOcfTDK1OiCCI.U.NpzPUSC/.5jhit9RrWEpDY5C', NULL, '2026-06-05 20:53:42', '2026-06-11 11:02:33');
 
 -- --------------------------------------------------------
 
@@ -356,19 +346,10 @@ CREATE TABLE `votes` (
 --
 
 INSERT INTO `votes` (`id`, `student_id`, `post_id`, `candidate_id`, `created_at`, `updated_at`) VALUES
-(5, 59, 1, 9, '2026-06-06 11:16:10', '2026-06-06 11:16:10'),
-(6, 59, 2, 4, '2026-06-06 11:16:14', '2026-06-06 11:16:14'),
-(8, 59, 4, 10, '2026-06-06 11:16:40', '2026-06-06 11:16:40'),
-(9, 60, 1, 2, '2026-06-07 11:08:45', '2026-06-07 11:08:45'),
-(10, 60, 4, 10, '2026-06-07 11:10:12', '2026-06-07 11:10:12'),
-(11, 60, 3, 8, '2026-06-07 11:10:14', '2026-06-07 11:10:14'),
-(13, 63, 1, 9, '2026-06-07 15:58:13', '2026-06-07 15:58:13'),
-(14, 63, 2, 6, '2026-06-07 15:58:16', '2026-06-07 15:58:16'),
-(16, 63, 4, 10, '2026-06-07 15:58:23', '2026-06-07 15:58:23'),
-(17, 61, 1, 9, '2026-06-07 16:03:29', '2026-06-07 16:03:29'),
-(18, 61, 2, 6, '2026-06-07 16:03:31', '2026-06-07 16:03:31'),
-(19, 61, 3, 8, '2026-06-07 16:03:34', '2026-06-07 16:03:34'),
-(20, 61, 4, 10, '2026-06-07 16:03:36', '2026-06-07 16:03:36');
+(22, 59, 3, 7, '2026-06-11 11:22:00', '2026-06-11 11:22:00'),
+(27, 63, 2, 4, '2026-06-11 11:49:00', '2026-06-11 11:49:00'),
+(28, 63, 3, 7, '2026-06-11 11:49:00', '2026-06-11 11:49:00'),
+(29, 63, 4, 13, '2026-06-11 11:49:00', '2026-06-11 11:49:00');
 
 --
 -- Indexes for dumped tables
@@ -486,7 +467,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `election_settings`
@@ -510,13 +491,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -540,7 +521,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
